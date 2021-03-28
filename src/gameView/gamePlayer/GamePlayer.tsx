@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Theme, withStyles, createStyles, Typography, Button,
+  Theme, withStyles, createStyles, Typography,
 } from '@material-ui/core';
 import {
   useParams,
