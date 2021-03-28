@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
 interface Props {
-  src: string,
+  githubURL: string,
   commitSHA: string
 }
 
-const IFrame = ({ src, commitSHA }: Props) => {
+const IFrame = ({ githubURL, commitSHA }: Props) => {
   useEffect(() => {
     const handler = (event: MessageEvent<any>) => {
       if (event.origin === 'null') {
@@ -23,7 +23,7 @@ const IFrame = ({ src, commitSHA }: Props) => {
     <iframe
       title="gameFrame"
       sandbox="allow-scripts"
-      src={src
+      src={githubURL
         .replace('raw.githubusercontent', 'rawcdn.githack')
         .replace('master', commitSHA)}
       id="gameFrame"
