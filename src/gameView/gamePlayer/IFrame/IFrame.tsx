@@ -1,15 +1,9 @@
 import React from 'react';
 
 interface Props {
-    src: string
+  src: string
 }
 
-const IFrame = ( {src}: Props ) => {
-
-    return (
-        <iframe sandbox="allow-scripts" src={src} id="gameFrame" style={{ height: "500px" }}>
-        </iframe>
-    );
-};
+const IFrame = ({ src }: Props) => <iframe title="gameFrame" sandbox="allow-scripts" src={src} id="gameFrame" style={{ height: '500px' }} />;
 
 export default IFrame;

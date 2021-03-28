@@ -26,22 +26,21 @@ const GamePlayer = ({ classes }: Props) => {
       const gameRaw = await getGame(gameId);
       setSrcURL(gameRaw.githubURL
         .replace('raw.githubusercontent', 'rawcdn.githack')
-        .replace('master', gameRaw.commitSHA)
-      );
+        .replace('master', gameRaw.commitSHA));
       setGame(gameRaw);
     }
     setupGame();
-    
+
     const handler = (event: MessageEvent<any>) => {
-      if (event.origin == 'null') {
+      if (event.origin === 'null') {
         const data = JSON.parse(event.data);
+        console.log(data);
       }
-    }
+    };
 
-    window.addEventListener("message", handler)
+    window.addEventListener('message', handler);
 
-    return () => window.removeEventListener("message", handler)
-
+    return () => window.removeEventListener('message', handler);
   }, []);
 
   if (game) {
