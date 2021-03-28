@@ -36,6 +36,8 @@ const GamePlayer = ({ classes }: Props) => {
     setupRooms();
   }, []);
 
+  console.log(game);
+
   if (game) {
     const gitHubInfo = `GitHub Info: ${game.githubURL} ${game.commitSHA}`;
     // TODO: display rooms and way to join room
