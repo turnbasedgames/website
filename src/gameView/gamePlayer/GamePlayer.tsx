@@ -19,25 +19,27 @@ type GamesURLParams = {
 const GamePlayer = ({ classes }: Props) => {
   const { gameId } = useParams<GamesURLParams>();
   const [game, setGame] = useState<null | Game>(null);
+  const [srcURL, setSrcURL] = useState('');
 
   useEffect(() => {
     async function setupGame() {
       const gameRaw = await getGame(gameId);
+      setSrcURL(gameRaw.githubURL
+        .replace('raw.githubusercontent', 'rawcdn.githack')
+        .replace('master', gameRaw.commitSHA)
+      );
       setGame(gameRaw);
     }
     setupGame();
     
     const handler = (event: MessageEvent<any>) => {
-      if (!event.data.source) {
+      if (event.origin == 'null') {
         const data = JSON.parse(event.data);
-        console.log(data.message);
-        data.message.onClick();
       }
     }
 
     window.addEventListener("message", handler)
 
-    // clean up
     return () => window.removeEventListener("message", handler)
 
   }, []);
@@ -49,7 +51,7 @@ const GamePlayer = ({ classes }: Props) => {
           {game.name}
         </Typography>
         <Typography variant="body1">{game.description}</Typography>
-        <iframe src="https://gitcdn.xyz/cdn/sarahannali/testTicTacToe/3cf0ceedf89f0c976d8da834b04307dffd994996/mockFrontEnd.html" />
+        <IFrame src={srcURL} />
       </div>
     );
   }
