@@ -19,28 +19,13 @@ type GamesURLParams = {
 const GamePlayer = ({ classes }: Props) => {
   const { gameId } = useParams<GamesURLParams>();
   const [game, setGame] = useState<null | Game>(null);
-  const [srcURL, setSrcURL] = useState('');
 
   useEffect(() => {
     async function setupGame() {
       const gameRaw = await getGame(gameId);
-      setSrcURL(gameRaw.githubURL
-        .replace('raw.githubusercontent', 'rawcdn.githack')
-        .replace('master', gameRaw.commitSHA));
       setGame(gameRaw);
     }
     setupGame();
-
-    const handler = (event: MessageEvent<any>) => {
-      if (event.origin === 'null') {
-        const data = JSON.parse(event.data);
-        console.log(data);
-      }
-    };
-
-    window.addEventListener('message', handler);
-
-    return () => window.removeEventListener('message', handler);
   }, []);
 
   if (game) {
@@ -50,7 +35,7 @@ const GamePlayer = ({ classes }: Props) => {
           {game.name}
         </Typography>
         <Typography variant="body1">{game.description}</Typography>
-        <IFrame src={srcURL} />
+        <IFrame src={game.githubURL} commitSHA={game.commitSHA} />
       </div>
     );
   }
