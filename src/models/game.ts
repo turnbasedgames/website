@@ -5,6 +5,8 @@ export interface Game{
   name: string,
   description: string,
   creatorId: string
+  githubURL: string,
+  commitSHA: string,
 }
 
 export interface GameReqBody{
