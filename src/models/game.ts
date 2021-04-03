@@ -24,7 +24,6 @@ export const createGame = async (game: GameReqBody): Promise<Game> => {
 
 export const getGame = async (gameId: string): Promise<Game> => {
   const res = await axios.get(`/api/game/${gameId}`);
-  console.log('raw:', res.data.game);
   return res.data.game;
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Theme, withStyles, createStyles, Typography,
+  Theme, withStyles, createStyles, Typography, List, ListItem,
 } from '@material-ui/core';
 import {
   useParams,
@@ -8,8 +8,9 @@ import {
 
 import IFrame from './IFrame/IFrame';
 import {
-  getRoom, Room,
+  getRoom, getRoomUsers, Room,
 } from '../../models/room';
+import { User } from '../../models/user';
 
 type Props = {
   classes: any
@@ -22,14 +23,20 @@ type RoomURLParams = {
 const RoomPlayer = ({ classes }: Props) => {
   const { roomId } = useParams<RoomURLParams>();
   const [room, setRoom] = useState<null | Room>(null);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     async function setupRoom() {
       const roomRaw = await getRoom(roomId);
       setRoom(roomRaw);
     }
+    async function setupUsers() {
+      const usersRaw = await getRoomUsers(roomId);
+      setUsers(usersRaw);
+    }
 
     setupRoom();
+    setupUsers();
   }, []);
 
   if (room) {
@@ -37,6 +44,18 @@ const RoomPlayer = ({ classes }: Props) => {
       <div className={classes.root}>
         <Typography variant="h4">{`Room: ${room.id}`}</Typography>
         <IFrame githubURL={room.game.githubURL} commitSHA={room.game.commitSHA} />
+        <List>
+          <Typography variant="h4">
+            {`${users.length} Users in Room`}
+          </Typography>
+          {users.map((user: User) => (
+            <ListItem
+              key={user.id}
+            >
+              {`User-${user.id}`}
+            </ListItem>
+          ))}
+        </List>
       </div>
     );
   }

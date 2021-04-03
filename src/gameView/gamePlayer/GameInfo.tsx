@@ -10,8 +10,9 @@ import {
 
 import { Game, getGame } from '../../models/game';
 import {
-  createRoom, getRooms, joinRoom, Room,
+  createRoom, getRooms, joinRoom, Room, userInRoom,
 } from '../../models/room';
+import { UserContext } from '../../models/user';
 
 type Props = {
   classes: any
@@ -63,27 +64,35 @@ const GameInfo = ({ classes }: Props) => {
           >
             Create Room
           </Button>
-          <List>
-            <Typography variant="h4">
-              {`${rooms.length} Active Rooms`}
-            </Typography>
-            {rooms.map((room: Room) => {
-              const listContent = `Join Room: ${room.id.substr(room.id.length - 5)}`;
-              return (
-                <ListItem
-                  key={room.id}
-                  button
-                  onClick={async (ev) => {
-                    ev.preventDefault();
-                    const joinedRoom = await joinRoom(room.id);
-                    history.push(`${location.pathname}/room/${joinedRoom.id}`);
-                  }}
-                >
-                  {listContent}
-                </ListItem>
-              );
-            })}
-          </List>
+          <UserContext.Consumer>
+            {({ user }) => (
+              <List>
+                <Typography variant="h4">
+                  {`${rooms.length} Active Rooms`}
+                </Typography>
+                {rooms.map((room: Room) => {
+                  const listContent = `Join Room: ${room.id.substr(room.id.length - 5)}`;
+                  return (
+                    <ListItem
+                      key={room.id}
+                      button
+                      onClick={async (ev) => {
+                        if (!user) return;
+                        ev.preventDefault();
+                        const roomJoined = await userInRoom(room.id, user.id);
+                        if (!roomJoined) {
+                          await joinRoom(room.id);
+                        }
+                        history.push(`${location.pathname}/room/${room.id}`);
+                      }}
+                    >
+                      {listContent}
+                    </ListItem>
+                  );
+                })}
+              </List>
+            )}
+          </UserContext.Consumer>
         </div>
       </div>
     );
