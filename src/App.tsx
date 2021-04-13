@@ -47,22 +47,22 @@ function App() {
   return (
     <div className={classes.container}>
       <UserContext.Provider value={{ user, setUser }}>
-          <Router>
-            <NavBar setUser={setUser} />
-            <Switch>
-              <Route exact path="/">
-                <Redirect to="/games" />
-              </Route>
-              <Route path="/games">
-                <GameView />
-              </Route>
-              <Route path="/create">
-                <CreateView />
-              </Route>
-            </Switch>
-          </Router>
+        <Router>
+          <NavBar setUser={setUser} />
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/games" />
+            </Route>
+            <Route path="/games">
+              <GameView />
+            </Route>
+            <Route path="/create">
+              <CreateView />
+            </Route>
+          </Switch>
+        </Router>
       </UserContext.Provider>
-      </div>
+    </div>
   );
 }
 

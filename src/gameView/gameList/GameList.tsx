@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Card, Col, Row, Form, FormControl, Button } from 'react-bootstrap';
+import {
+  Container,
+  Card,
+  Col,
+  Row,
+} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Game, getGames } from '../../models/game';
 import classes from './GameList.module.css';
@@ -17,8 +22,8 @@ const GameList = () => {
 
   return (
     <div className={classes.root}>
-      <Container style={{ marginTop: "100px" }}>
-        <Row style={{ paddingBottom: "70px" }}>
+      <Container style={{ marginTop: '100px' }}>
+        <Row style={{ paddingBottom: '70px' }}>
           <Col xs={6} md={4} lg={3}>
             <Card
               onClick={(ev: React.ChangeEvent<any>) => {
@@ -52,7 +57,7 @@ const GameList = () => {
                 <Card.Body>
                   <Card.Title>{game.name}</Card.Title>
                   <Card.Text>
-                    by: {game.creator.id}
+                    {`by: ${game.creator.id}`}
                   </Card.Text>
                 </Card.Body>
               </Card>
