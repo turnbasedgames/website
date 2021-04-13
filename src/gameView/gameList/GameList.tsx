@@ -17,22 +17,7 @@ const GameList = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.title}>
-        <span className={classes.neon}>Turn</span>
-        <span className={classes.neonTwo}>Based</span>
-        <span className={classes.neon}>Games</span>
-      </div>
-      <Row>
-        <Form inline style={{ width: "280px", margin: "0 auto" }}>
-          <Col xs={10} style={{ marginRight: "-20px" }}>
-            <FormControl type="text" placeholder="Search" />
-          </Col>
-          <Col xs={2}>
-            <Button variant="dark" type="submit"><i className="fas fa-search"></i></Button>
-          </Col>
-        </Form>
-      </Row>
-      <Container style={{ marginTop: "70px" }}>
+      <Container style={{ marginTop: "100px" }}>
         <Row style={{ paddingBottom: "70px" }}>
           <Col xs={6} md={4} lg={3}>
             <Card

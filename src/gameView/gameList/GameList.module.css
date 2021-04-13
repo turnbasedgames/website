@@ -2,60 +2,6 @@
     background-color: rgb(21, 21, 21);
 }
 
-@font-face {
-    font-family: neonFont;
-    src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf);
-}
-
-.title {
-    font-family: neonFont;
-    font-size: 9vw;
-    line-height: 4vw;
-    text-align: center;
-    margin-top: 5%;
-    margin-bottom: 7%;
-}
-
-.neon {
-    color: #fb42ba;
-    text-shadow: 0 0 3vw #f40ac5;
-    animation: neon 2s ease infinite;
-    -moz-animation: neon 2s ease infinite;
-    -webkit-animation: neon 2s ease infinite;
-}
-
-@keyframes neon {
-    0%,
-    100% {
-        text-shadow: 0 0 1vw #fa16bd, 0 0 3vw #fa16bd, 0 0 10vw #fa16bd, 0 0 10vw #fa16bd, 0 0 .4vw #ffd4f9, .5vw .5vw .1vw #ed5ad6;
-        color: #ffd4f9;
-    }
-    50% {
-        text-shadow: 0 0 .5vw #80166f, 0 0 1.5vw #80166f, 0 0 5vw #80166f, 0 0 5vw #80166f, 0 0 .2vw #80166f, .5vw .5vw .1vw #660e58;
-        color: #ed5ad6;
-    }
-}
-
-.neonTwo {
-    color: #426DFB;
-    text-shadow: 0 0 3vw #2356FF;
-    animation: neonTwo 3s ease infinite;
-    -moz-animation: neonTwo 3s ease infinite;
-    -webkit-animation: neonTwo 3s ease infinite;
-}
-
-@keyframes neonTwo {
-    0%,
-    100% {
-      text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #69e4ff, .5vw .5vw .1vw #147280;
-      color: #69e4ff;
-    }
-    50% {
-      text-shadow: 0 0 .5vw #082180, 0 0 1.5vw #082180, 0 0 5vw #082180, 0 0 5vw #082180, 0 0 .2vw #082180, .5vw .5vw .1vw #0A3940;
-      color: #146C80;
-    }
-}
-
 .createButton {
     width: 100%;
     background-color: #151C39;
@@ -84,8 +30,6 @@
 }
 
 .createButton:hover {
-    /* box-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #69e4ff, .5vw .5vw .1vw #147280;
-    background-color: #69e4ff; */
     text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #69e4ff, .5vw .5vw .1vw #147280;
     color: #69e4ff;
     border-color: #69e4ff;
