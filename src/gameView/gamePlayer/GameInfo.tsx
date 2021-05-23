@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useState } from 'react';
 import {
   useHistory,
@@ -67,7 +68,7 @@ const GameInfo = () => {
         <Col xs={6}>
           <Row style={{ display: 'inline' }}>
             <h1>
-              <a href={game.githubURL}><i className="fab fa-github">Github Icon</i></a>
+              <a href={game.githubURL}><i className="fab fa-github" /></a>
               {' '}
               {game.name}
             </h1>
