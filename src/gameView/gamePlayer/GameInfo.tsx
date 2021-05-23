@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import { Game, getGame } from '../../models/game';
 import {
-  getRooms, joinRoom, Room, userInRoom,
+  createRoom, getRooms, joinRoom, Room, userInRoom,
 } from '../../models/room';
 import { UserContext } from '../../models/user';
 import {
@@ -51,7 +51,13 @@ const GameInfo = () => {
               src="https://images.unsplash.com/photo-1570989614585-581ee5f7e165?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80" />
           </Row>
           <Row className={classes.createButton}>
-            <Button>
+            <Button
+              onClick={async (ev) => {
+                ev.preventDefault();
+                const room = await createRoom(game.id);
+                history.push(`${location.pathname}/room/${room.id}`);
+              }}
+            >
               + Create Room
             </Button>
           </Row>
