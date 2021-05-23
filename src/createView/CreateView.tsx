@@ -7,16 +7,21 @@ import classes from './CreateView.module.css';
 const githubURLRegExp = new RegExp('^https://(www.)?github.com/.*/.*$');
 
 const CreateView = () => {
-  const [form, setForm] = useState({ name: "", description: "", githubURL: "", commitSHA: "" });
-  const [errors, setErrors] = useState({ githubURL: "" });
+  const [form, setForm] = useState({
+    name: '',
+    description: '',
+    githubURL: '',
+    commitSHA: '',
+  });
+  const [errors, setErrors] = useState({ githubURL: '' });
   const history = useHistory();
 
   const setField = (field: string, value: string) => {
     setForm({
       ...form,
-      [field]: value
-    })
-  }
+      [field]: value,
+    });
+  };
 
   return (
     <div className={classes.form}>
