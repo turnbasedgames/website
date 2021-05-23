@@ -37,9 +37,9 @@ const RoomPlayer = () => {
     return (
       <div className={classes.container}>
         <h3>{room.game.name}</h3>
-        <h5 style={{ color: "white" }}>{`Room: ${room.id}`}</h5>
+        <h5 style={{ color: 'white' }}>{`Room: ${room.id}`}</h5>
         <IFrame githubURL={room.game.githubURL} commitSHA={room.game.commitSHA} />
-        <h5 style={{ color: "white" }}>
+        <h5 style={{ color: 'white' }}>
           {`${users.length} Users in Room`}
         </h5>
         {users.map((user: User) => (

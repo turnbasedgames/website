@@ -4,18 +4,18 @@ import {
   useLocation,
   useParams,
 } from 'react-router-dom';
-import { Game, getGame } from '../../models/game';
-import {
-  createRoom, getRooms, joinRoom, Room, userInRoom,
-} from '../../models/room';
-import { UserContext } from '../../models/user';
 import {
   Image,
   Row,
   Col,
   Button,
-  ListGroup
+  ListGroup,
 } from 'react-bootstrap';
+import { Game, getGame } from '../../models/game';
+import {
+  createRoom, getRooms, joinRoom, Room, userInRoom,
+} from '../../models/room';
+import { UserContext } from '../../models/user';
 import classes from './GameInfo.module.css';
 
 type GameURLParams = {
@@ -46,9 +46,11 @@ const GameInfo = () => {
     return (
       <Row className={classes.gameContainer}>
         <Col xs={6}>
-          <Row style={{ justifyContent: "flex-end" }}>
-            <Image className={classes.gameImg}
-              src="https://images.unsplash.com/photo-1570989614585-581ee5f7e165?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80" />
+          <Row style={{ justifyContent: 'flex-end' }}>
+            <Image
+              className={classes.gameImg}
+              src="https://images.unsplash.com/photo-1570989614585-581ee5f7e165?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
+            />
           </Row>
           <Row className={classes.createButton}>
             <Button
@@ -63,12 +65,16 @@ const GameInfo = () => {
           </Row>
         </Col>
         <Col xs={6}>
-          <Row style={{ display: "inline" }}>
-            <h1><a href={game.githubURL}><i className="fab fa-github"></i></a> {game.name}</h1>
+          <Row style={{ display: 'inline' }}>
+            <h1>
+              <a href={game.githubURL}><i className="fab fa-github">Github Icon</i></a>
+              {' '}
+              {game.name}
+            </h1>
             <p>{game.description}</p>
           </Row>
           <Row>
-            <div style={{ paddingLeft: "15px" }}>
+            <div style={{ paddingLeft: '15px' }}>
               <h4>Active Rooms:</h4>
               <UserContext.Consumer>
                 {({ user }) => (
@@ -91,7 +97,7 @@ const GameInfo = () => {
                         >
                           {listContent}
                           <div className={classes.roomUser}>
-                            <i className="fas fa-user"></i>
+                            <i className="fas fa-user" />
                             {` ${room.leader.id}`}
                           </div>
                         </ListGroup.Item>

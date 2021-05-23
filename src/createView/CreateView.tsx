@@ -34,36 +34,37 @@ const CreateView = () => {
             const gameObj: GameReqBody = form;
             const game = await createGame(gameObj);
             history.push(`/games/${game.id}`);
-          }
-          else setErrors({ "githubURL": "Please enter a valid GitHub URL." });
+          } else setErrors({ githubURL: 'Please enter a valid GitHub URL.' });
         }}
       >
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
-            onChange={e => setField('name', e.target.value)}
+            onChange={(e) => setField('name', e.target.value)}
             placeholder="Enter name"
-            required />
+            required
+          />
         </Form.Group>
         <Form.Group controlId="description">
           <Form.Label>Description</Form.Label>
           <Form.Control
             type="text"
-            onChange={e => setField('description', e.target.value)}
+            onChange={(e) => setField('description', e.target.value)}
             placeholder="Enter description"
-            required />
+            required
+          />
         </Form.Group>
         <Form.Group controlId="github">
           <Form.Label>GitHub Repository URL</Form.Label>
           <Form.Control
             type="text"
-            onChange={e => setField('githubURL', e.target.value)}
+            onChange={(e) => setField('githubURL', e.target.value)}
             placeholder="Enter GitHub repository URL"
             required
             isInvalid={!!errors.githubURL}
           />
-          <Form.Control.Feedback type='invalid'>
+          <Form.Control.Feedback type="invalid">
             {errors.githubURL}
           </Form.Control.Feedback>
         </Form.Group>
@@ -71,13 +72,14 @@ const CreateView = () => {
           <Form.Label>Commit SHA</Form.Label>
           <Form.Control
             type="text"
-            onChange={e => setField('commitSHA', e.target.value)}
+            onChange={(e) => setField('commitSHA', e.target.value)}
             placeholder="Enter commit SHA"
-            required />
+            required
+          />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit
-      </Button>
+        </Button>
       </Form>
     </div>
   );
