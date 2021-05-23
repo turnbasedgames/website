@@ -7,8 +7,8 @@ import classes from './CreateView.module.css';
 const githubURLRegExp = new RegExp('^https://(www.)?github.com/.*/.*$');
 
 const CreateView = () => {
-  const [form, setForm] = useState({name: "", description: "", githubURL: "", commitSHA: ""});
-  const [errors, setErrors] = useState({githubURL: ""});
+  const [form, setForm] = useState({ name: "", description: "", githubURL: "", commitSHA: "" });
+  const [errors, setErrors] = useState({ githubURL: "" });
   const history = useHistory();
 
   const setField = (field: string, value: string) => {
@@ -25,20 +25,19 @@ const CreateView = () => {
         onSubmit={async (event: any) => {
           event.preventDefault();
 
-          if (githubURLRegExp.test(form.githubURL))
-          {
+          if (githubURLRegExp.test(form.githubURL)) {
             const gameObj: GameReqBody = form;
             const game = await createGame(gameObj);
             history.push(`/games/${game.id}`);
           }
-          else setErrors({"githubURL": "Please enter a valid GitHub URL."});
+          else setErrors({ "githubURL": "Please enter a valid GitHub URL." });
         }}
       >
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
-            onChange={ e => setField('name', e.target.value) }
+            onChange={e => setField('name', e.target.value)}
             placeholder="Enter name"
             required />
         </Form.Group>
@@ -46,7 +45,7 @@ const CreateView = () => {
           <Form.Label>Description</Form.Label>
           <Form.Control
             type="text"
-            onChange={ e => setField('description', e.target.value) }
+            onChange={e => setField('description', e.target.value)}
             placeholder="Enter description"
             required />
         </Form.Group>
@@ -54,20 +53,20 @@ const CreateView = () => {
           <Form.Label>GitHub Repository URL</Form.Label>
           <Form.Control
             type="text"
-            onChange={ e => setField('githubURL', e.target.value) }
+            onChange={e => setField('githubURL', e.target.value)}
             placeholder="Enter GitHub repository URL"
             required
             isInvalid={!!errors.githubURL}
           />
           <Form.Control.Feedback type='invalid'>
-            { errors.githubURL }
+            {errors.githubURL}
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="commit">
           <Form.Label>Commit SHA</Form.Label>
           <Form.Control
             type="text"
-            onChange={ e => setField('commitSHA', e.target.value) }
+            onChange={e => setField('commitSHA', e.target.value)}
             placeholder="Enter commit SHA"
             required />
         </Form.Group>
