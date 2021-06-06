@@ -48,8 +48,6 @@ export const getRoomUsers = async (roomId: String) => {
 };
 
 export const onMove = async (roomId: String, message: JSON) => {
-  console.log("BEFORE")
-  console.log("making move: ", message);
-  const res = await axios.post(`/api/room/${roomId}/move`, { move: message });
+  const res = await axios.post(`/api/room/${roomId}/move`, message);
   return res.data.room;
 }
