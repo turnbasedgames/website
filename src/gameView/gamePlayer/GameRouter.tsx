@@ -5,6 +5,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
+import GameEditor from '../gameEditor';
 import GameInfo from './GameInfo';
 import RoomPlayer from './RoomPlayer';
 
@@ -17,6 +18,9 @@ const GameRouter = () => {
       </Route>
       <Route path={`${match.path}/room/:roomId`}>
         <RoomPlayer />
+      </Route>
+      <Route path={`${match.path}/edit`}>
+        <GameEditor />
       </Route>
     </Switch>
   );

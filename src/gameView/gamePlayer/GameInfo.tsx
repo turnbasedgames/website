@@ -63,6 +63,16 @@ const GameInfo = () => {
             >
               + Create Room
             </Button>
+            <Button
+              style={{ marginLeft: '1rem' }}
+              variant="outline-secondary"
+              onClick={async (ev) => {
+                ev.preventDefault();
+                history.push(`${location.pathname}/edit`);
+              }}
+            >
+              Edit
+            </Button>
           </Row>
         </Col>
         <Col xs={6}>
