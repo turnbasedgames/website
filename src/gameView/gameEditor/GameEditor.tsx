@@ -1,20 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Editor from '@monaco-editor/react';
+import classes from './GameEditor.module.css';
+import { UserContext } from '../../models/user';
 
 const GameEditor = () => {
+  const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const fs = window.require('fs');
-    const files = fs.readdirSync('/', { withFileTypes: true });
-    console.log(files);
-    console.log('test');
-  }, []);
+    async function setupFileSystem() {
+      console.log('user:', user);
+      if (!user) {
+        return;
+      }
+      console.log(user.firebaseId);
+
+      setLoading(false);
+    }
+
+    setupFileSystem();
+  }, [user]);
+
   return (
-    <div style={{ margin: '70px' }}>
-      <Editor
-        height="80vh"
-        defaultLanguage="javascript"
-        defaultValue="// some comment"
-      />
+    <div className={classes.root}>
+      {loading ? <h1 style={{ color: 'white' }}>Loading :D</h1>
+        : (
+          <Editor
+            height="80vh"
+            defaultLanguage="javascript"
+            defaultValue="// some comment"
+          />
+        )}
     </div>
   );
 };

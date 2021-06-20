@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 
 export interface User {
   id: string,
-  firebaseID: string,
+  firebaseId: string,
   firebaseUser: firebase.User
   signInProvider: string,
 }
