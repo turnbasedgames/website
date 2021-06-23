@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect, useRef, useState,
+} from 'react';
 import {
   useParams,
 } from 'react-router-dom';
@@ -15,6 +17,14 @@ type RoomURLParams = {
   roomId: string
 };
 
+type WatchRoomRes = {
+  error: string
+};
+
+type UnwatchRoomRes = {
+  error: string
+};
+
 const socket = io();
 
 const RoomPlayer = () => {
@@ -22,11 +32,25 @@ const RoomPlayer = () => {
   const [room, setRoom] = useState<null | Room>(null);
   const [latestState, setLatestState] = useState<null | RoomState>();
   const [users, setUsers] = useState<User[]>([]);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // TODO: Why is "iframe received message:" being printed twice?
+  // is the iframe getting loaded multiple times?
+  console.log('latestState updated', latestState);
 
   const setLatestStateWithContender = (contender: RoomState) => {
+    console.log('setlateststatewithcontender', contender);
     setLatestState((prevLatestState) => {
-      if (latestState && (latestState.version < contender.version)) {
-        // TODO: send latestState to iframe
+      console.log('prevlateststate', prevLatestState);
+      console.log(iframeRef);
+      if (!prevLatestState || (prevLatestState.version < contender.version)) {
+        if (iframeRef.current && iframeRef.current.contentWindow) {
+          console.log('sending message to iframe');
+          iframeRef.current.contentWindow.postMessage({
+            event: 'stateChanged',
+            latestState: contender,
+          }, '*');
+        }
         return contender;
       }
       return prevLatestState;
@@ -49,11 +73,19 @@ const RoomPlayer = () => {
   }, []);
 
   useEffect(() => {
-    socket.emit('watchRoom', { roomId });
+    socket.emit('watchRoom', { roomId }, (res: null | WatchRoomRes) => {
+      if (res) {
+        console.log('error trying to watch room', res.error);
+      }
+    });
     socket.on('room:latestState', setLatestStateWithContender);
 
     return () => {
-      socket.emit('unwatchRoom', { roomId });
+      socket.emit('unwatchRoom', { roomId }, (res: null | UnwatchRoomRes) => {
+        if (res) {
+          console.log('error trying to unwatch room', res.error);
+        }
+      });
       socket.off('room:latestState', setLatestStateWithContender);
     };
   }, []);
@@ -63,7 +95,11 @@ const RoomPlayer = () => {
       <div className={classes.container}>
         <h3>{room.game.name}</h3>
         <h5 style={{ color: 'white' }}>{`Room: ${room.id}`}</h5>
-        <IFrame githubURL={room.game.githubURL} commitSHA={room.game.commitSHA} />
+        <IFrame
+          githubURL={room.game.githubURL}
+          commitSHA={room.game.commitSHA}
+          iframeRef={iframeRef}
+        />
         <h5 style={{ color: 'white' }}>
           {`${users.length} Users in Room`}
         </h5>
