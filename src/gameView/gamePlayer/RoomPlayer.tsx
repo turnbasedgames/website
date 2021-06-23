@@ -6,7 +6,7 @@ import { io } from 'socket.io-client';
 
 import IFrame from './IFrame/IFrame';
 import {
-  getRoom, getRoomUsers, Room,
+  getRoom, getRoomUsers, Room, RoomState,
 } from '../../models/room';
 import { User } from '../../models/user';
 import classes from './RoomPlayer.module.css';
@@ -20,12 +20,24 @@ const socket = io();
 const RoomPlayer = () => {
   const { roomId } = useParams<RoomURLParams>();
   const [room, setRoom] = useState<null | Room>(null);
+  const [latestState, setLatestState] = useState<null | RoomState>();
   const [users, setUsers] = useState<User[]>([]);
+
+  const setLatestStateWithContender = (contender: RoomState) => {
+    setLatestState((prevLatestState) => {
+      if (latestState && (latestState.version < contender.version)) {
+        // TODO: send latestState to iframe
+        return contender;
+      }
+      return prevLatestState;
+    });
+  };
 
   useEffect(() => {
     async function setupRoom() {
       const roomRaw = await getRoom(roomId);
       setRoom(roomRaw);
+      setLatestStateWithContender(roomRaw.latestState);
     }
     async function setupUsers() {
       const usersRaw = await getRoomUsers(roomId);
@@ -37,16 +49,12 @@ const RoomPlayer = () => {
   }, []);
 
   useEffect(() => {
-    function handleNewLatestState(latestState: any) {
-      console.log(latestState);
-    }
-
     socket.emit('watchRoom', { roomId });
-    socket.on('room:latestState', handleNewLatestState);
+    socket.on('room:latestState', setLatestStateWithContender);
 
     return () => {
       socket.emit('unwatchRoom', { roomId });
-      socket.off('room:latestState', handleNewLatestState);
+      socket.off('room:latestState', setLatestStateWithContender);
     };
   }, []);
 
