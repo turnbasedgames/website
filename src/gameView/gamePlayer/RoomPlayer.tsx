@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   useParams,
 } from 'react-router-dom';
+import { io } from 'socket.io-client';
 
 import IFrame from './IFrame/IFrame';
 import {
@@ -13,6 +14,8 @@ import classes from './RoomPlayer.module.css';
 type RoomURLParams = {
   roomId: string
 };
+
+const socket = io();
 
 const RoomPlayer = () => {
   const { roomId } = useParams<RoomURLParams>();
@@ -31,6 +34,20 @@ const RoomPlayer = () => {
 
     setupRoom();
     setupUsers();
+  }, []);
+
+  useEffect(() => {
+    function handleNewLatestState(latestState: any) {
+      console.log(latestState);
+    }
+
+    socket.emit('watchRoom', { roomId });
+    socket.on('room:latestState', handleNewLatestState);
+
+    return () => {
+      socket.emit('unwatchRoom', { roomId });
+      socket.off('room:latestState', handleNewLatestState);
+    };
   }, []);
 
   if (room) {
