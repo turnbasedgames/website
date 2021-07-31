@@ -34,8 +34,6 @@ const RoomPlayer = () => {
   const [users, setUsers] = useState<User[]>([]);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // TODO: Why is "iframe received message:" being printed twice?
-  // is the iframe getting loaded multiple times?
   console.log('latestState updated', latestState);
 
   const setLatestStateWithContender = (contender: RoomState) => {
