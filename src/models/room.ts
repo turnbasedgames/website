@@ -4,9 +4,16 @@ import { StatusCodes } from 'http-status-codes';
 import { Game } from './game';
 import { User } from './user';
 
+export interface RoomState {
+  room: string,
+  state: any,
+  version: number,
+}
+
 export interface Room {
   id: string
   game: Game,
+  latestState: RoomState,
   leader: User,
 }
 
